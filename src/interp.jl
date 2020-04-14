@@ -24,7 +24,7 @@ To interpolate, just call it with the value to interpolate (days to maturity) an
 (ri::RateInterpolator)(d::Real,dt::Date)
 ```
 
-Currently supports only linear interpolation and extrapolation. See `createRateInterpolator` for construction.
+Currently supports only linear interpolation and extrapolation. See [`createRateInterpolator`](@ref) for construction.
 """
 struct RateInterpolator{T}
     dates::Vector{Date}
@@ -44,7 +44,7 @@ end
 """
 `createRateInterpolator(df;realrates::Bool=false)`
 
-Preferred method to construct a `RateInterpolator`, just pass the `df` that you get from `getyieldcurves()`.
+Preferred method to construct a [`RateInterpolator`](@ref), just pass the `df` that you get from [`getyieldcurves`](@ref).
 """
 function createRateInterpolator(df;realrates::Bool=false)
     dates = unique(df.date)
