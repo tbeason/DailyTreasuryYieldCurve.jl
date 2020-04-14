@@ -1,0 +1,21 @@
+name = "DailyTreasuryYieldCurve"
+uuid = "9f24bdcd-220e-43b5-8e6d-85812fd68fcf"
+authors = ["Tyler Beason <tbeas12@gmail.com>"]
+version = "0.1.0"
+
+[deps]
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+Dates = "ade2ca70-3891-5945-98fb-dc099432e06a"
+EzXML = "8f5d6c58-4d21-5cfd-889c-e3ad7ee6a615"
+HTTP = "cd3eb016-35fb-5094-929b-558a96fad6f3"
+Missings = "e1d29d7a-bbdc-5cf2-9ac0-f12de2c33e28"
+Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
+
+[compat]
+julia = "^1"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]
