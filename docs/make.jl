@@ -5,7 +5,7 @@ makedocs(
     format = Documenter.HTML(; prettyurls = get(ENV, "CI", nothing) == "true"),
     authors = "Tyler Beason",
     sitename = "DailyTreasuryYieldCurve.jl",
-    pages = Any["index.md"]
+    pages = Any["Main"=>"index.md"]
     # strict = true,
     # clean = true,
     # checkdocs = :exports,
