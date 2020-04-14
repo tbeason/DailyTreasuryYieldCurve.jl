@@ -3,7 +3,7 @@ module DailyTreasuryYieldCurve
 using Reexport
 using EzXML
 import HTTP
-using Dates
+@reexport using Dates
 using Missings
 @reexport using DataFrames
 using Interpolations
