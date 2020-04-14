@@ -51,13 +51,22 @@ Not all maturities were reported on every day.
 
 # Example
 
+It is easy to get the historical yield curves:
 ```julia
 using DailyTreasuryYieldCurve
 
 df_rates = getyieldcurves()
 
 df_realrates = getyieldcurves(;realrates=true)
+```
 
+You can also build a `RateInterpolator` which helps you interpolate/extrapolate using the data:
+```julia
+using Dates
+
+nominal_itp = createRateInterpolator(df_rates)
+
+nominal_itp(45,Date(2020,4,13)) # gets the 45 day rate on 2020-4-13
 ```
 
 

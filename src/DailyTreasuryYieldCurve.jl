@@ -6,10 +6,11 @@ using HTTP
 using Dates
 using Missings
 @reexport using DataFrames
-
+using Interpolations
 
 
 export getyieldcurves
+export RateInterpolator, createRateInterpolator
 
 
 
@@ -139,8 +140,11 @@ function _parserealcurves(thexml)
 end
 
 
-    
 
+
+
+# include additional files
+include("interp.jl")
 
 
 

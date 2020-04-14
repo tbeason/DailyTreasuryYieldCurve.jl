@@ -21,3 +21,13 @@ end
 
     @test isapprox(testdf[1,:y5],1.752231)
 end
+
+
+@testset "Interpolation" begin
+    testdf = getyieldcurves()
+    testri = createRateInterpolator(testdf)
+
+    @test isapprox(testri(45,Date(2020,4,13)),0.23)
+
+    @test isapprox(testri.([30;60],Date(2020,4,13)),[0.17;0.29])
+end
