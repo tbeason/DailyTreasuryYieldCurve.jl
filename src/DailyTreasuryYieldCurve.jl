@@ -2,7 +2,7 @@ module DailyTreasuryYieldCurve
 
 using Reexport
 using EzXML
-using HTTP
+import HTTP
 using Dates
 using Missings
 @reexport using DataFrames
