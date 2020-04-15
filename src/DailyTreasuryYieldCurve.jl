@@ -16,7 +16,7 @@ export RateInterpolator, createRateInterpolator
 
 
 
-const DATAFEED = "http://data.treasury.gov/feed.svc/DailyTreasuryYieldCurveRateData"
+const DATAFEED = "https://data.treasury.gov/feed.svc/DailyTreasuryYieldCurveRateData"
 const DATAFEEDREAL = "http://data.treasury.gov/feed.svc/DailyTreasuryRealYieldCurveRateData"
 
 # these fields are provided by the feed (as of 20200413)
@@ -32,7 +32,7 @@ const COLNAMESREAL = [:id,:date,:y5,:y7,:y10,:y20,:y30]
 
 
 """
-`getyieldcurves(;real::Bool=false)`
+`getyieldcurves(;real::Bool=false,begdt::Date=Date(1990,1,2),enddt::Date=today())`
 
 Download the whole published history of daily US Treasury yield curves from the official data feed.
 
@@ -42,20 +42,27 @@ By default, gets the nominal yield curve. Pass `realrates=true` to get the real 
 
 Returns a `DataFrame`.
 """
-function getyieldcurves(;realrates::Bool=false)
+function getyieldcurves(;realrates::Bool=false,begdt::Date=Date(1990,1,2),enddt::Date=today())
+    startyr=max(year(begdt),1990)-1
+    endyr=min(year(enddt),year(today()))+1
+    datefilter = string("?\$filter=","year(NEW_DATE)%20gt%20",startyr,"%20and%20","year(NEW_DATE)%20lt%20",endyr)
     if realrates
-        h = HTTP.get(DATAFEEDREAL)
+        h = HTTP.get(string(DATAFEEDREAL,datefilter))
     else
-        h = HTTP.get(DATAFEED)
+        h = HTTP.get(string(DATAFEED,datefilter))
     end
     thexml = parsexml(String(h.body))
-    return _parseyieldcurves(thexml,realrates)
+    df =_parseyieldcurves(thexml,realrates)
+    filter!(row -> begdt <= row.date <= enddt,df)
+    return df
 end
 
 
-function getyieldcurves(fn::AbstractString;realrates::Bool=false)
+function getyieldcurves(fn::AbstractString;realrates::Bool=false,begdt::Date=Date(1990,1,2),enddt::Date=today())
     thexml = readxml(fn)
-    return _parseyieldcurves(thexml,realrates)
+    df =_parseyieldcurves(thexml,realrates)
+    filter!(row -> begdt <= row.date <= enddt,df)
+    return df
 end
 
 

@@ -1,9 +1,10 @@
 using DailyTreasuryYieldCurve, Dates
 using Test
 
-@testset "Nominal" begin
-    testdf = getyieldcurves()
+testdf = getyieldcurves()
 
+@testset "Nominal" begin
+    
     @test names(testdf) == DailyTreasuryYieldCurve.COLNAMES[2:end-1]
 
     @test testdf[1,:date] == Date(1990,1,2)
@@ -13,21 +14,30 @@ end
 
 
 @testset "Real" begin
-    testdf = getyieldcurves(;realrates=true)
+    testdfr = getyieldcurves(;realrates=true)
 
-    @test names(testdf) == DailyTreasuryYieldCurve.COLNAMESREAL[2:end]
+    @test names(testdfr) == DailyTreasuryYieldCurve.COLNAMESREAL[2:end]
 
-    @test testdf[1,:date] == Date(2003,1,2)
+    @test testdfr[1,:date] == Date(2003,1,2)
 
-    @test isapprox(testdf[1,:y5],1.752231)
+    @test isapprox(testdfr[1,:y5],1.752231)
 end
 
 
 @testset "Interpolation" begin
-    testdf = getyieldcurves()
+    # testdf = getyieldcurves()
     testri = createRateInterpolator(testdf)
 
     @test isapprox(testri(45,Date(2020,4,13)),0.23)
 
     @test isapprox(testri.([30;60],Date(2020,4,13)),[0.17;0.29])
+end
+
+
+@testset "Filters" begin
+    # testdf = getyieldcurves()
+    smalltestdf = getyieldcurves(;begdt=Date(2019,1,1),enddt=Date(2019,12,31))
+    filter!(row->Date(2019,1,1) <= row.date <= Date(2019,12,31),testdf)
+
+    @test testdf == smalltestdf
 end
