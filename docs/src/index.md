@@ -46,10 +46,14 @@ Not all maturities were reported on every day.
 
 The package contains some convenience utilities for interpolating/extrapolating with the yield curve data.
 
+
 ```@docs
 RateInterpolator
 createRateInterpolator
 ```
+
+!!! warning "Last curve carried forward"
+    If you request a date that does not exist in `RateInterpolator.dates`, it will (blindly) carry forward the curve from the previous available date. It is your responsibility to double-check your inputs.
 
 
 ## Day Count Convention
