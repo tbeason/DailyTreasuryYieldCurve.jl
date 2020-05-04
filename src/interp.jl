@@ -46,7 +46,9 @@ end
 
 Preferred method to construct a [`RateInterpolator`](@ref), just pass the `df` that you get from [`getyieldcurves`](@ref).
 """
-function createRateInterpolator(df;realrates::Bool=false)
+function createRateInterpolator(df0;realrates::Bool=false)
+    loc = [!all(ismissing(x) for x in r) for r in eachrow(select(df0,Not(:date)))] # 0 for rows with only missing data
+    df = df0[loc,:]
     dates = unique(df.date)
 
     dfs = DataFrames.stack(df,Not(:date))
