@@ -13,7 +13,7 @@ const TTMREAL = (;Iterators.zip(DailyTreasuryYieldCurve.COLNAMESREAL[3:end],DAYS
 
 
 """
-`RateInterpolator`
+    RateInterpolator
 
 A container for the series of daily yield curve interpolators.
 
@@ -42,7 +42,7 @@ end
 
 
 """
-`createRateInterpolator(df;realrates::Bool=false)`
+    createRateInterpolator(df;realrates::Bool=false)
 
 Preferred method to construct a [`RateInterpolator`](@ref), just pass the `df` that you get from [`getyieldcurves`](@ref).
 """
@@ -51,7 +51,7 @@ function createRateInterpolator(df0;realrates::Bool=false)
     df = df0[loc,:]
     dates = unique(df.date)
 
-    dfs = DataFrames.stack(df,Not(:date))
+    dfs = DataFrames.stack(df,Not(:date); variable_eltype=Symbol)
     if realrates
         dfs.DTM = [TTMREAL[k] for k in dfs.variable]
     else
@@ -68,7 +68,7 @@ end
 
 
 """
-`buildsingleinterpolator(df::AbstractDataFrame)`
+    buildsingleinterpolator(df::AbstractDataFrame)
 
 Builds a single (one day) interpolation of the yield curve. Used in `createRateInterpolator`.
 """
