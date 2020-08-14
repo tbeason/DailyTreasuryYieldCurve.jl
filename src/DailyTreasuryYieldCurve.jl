@@ -32,7 +32,7 @@ const COLNAMESREAL = [:id,:date,:y5,:y7,:y10,:y20,:y30]
 
 
 """
-`getyieldcurves(;real::Bool=false,begdt::Date=Date(1990,1,2),enddt::Date=today())`
+    getyieldcurves(;real::Bool=false,begdt::Date=Date(1990,1,2),enddt::Date=today())
 
 Download the whole published history of daily US Treasury yield curves from the official data feed.
 
@@ -68,7 +68,7 @@ end
 
 
 """
-`_parseyieldcurves(thexml,realrates)`
+    _parseyieldcurves(thexml,realrates)
 
 Parser function for Treasury yield curve data. (unexported)
 """

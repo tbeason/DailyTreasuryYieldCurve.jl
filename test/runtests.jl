@@ -5,7 +5,7 @@ testdf = getyieldcurves()
 
 @testset "Nominal" begin
     
-    @test names(testdf) == DailyTreasuryYieldCurve.COLNAMES[2:end-1]
+    @test Symbol.(names(testdf)) == DailyTreasuryYieldCurve.COLNAMES[2:end-1]
 
     @test testdf[1,:date] == Date(1990,1,2)
 
@@ -16,7 +16,7 @@ end
 @testset "Real" begin
     testdfr = getyieldcurves(;realrates=true)
 
-    @test names(testdfr) == DailyTreasuryYieldCurve.COLNAMESREAL[2:end]
+    @test Symbol.(names(testdfr)) == DailyTreasuryYieldCurve.COLNAMESREAL[2:end]
 
     @test testdfr[1,:date] == Date(2003,1,2)
 
